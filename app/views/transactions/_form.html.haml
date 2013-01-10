@@ -1,12 +1,13 @@
-= simple_form_for(@transaction) do |f|
+= simple_form_for @transaction, html: { class: "well form-horizontal" } do |f|
+
   = f.error_notification
 
   .form-inputs
     = f.input :amount
     = f.input :payee
     = f.input :description
-    = f.input :paid_at
-    = f.input :transaction_type
+    = f.input :paid_at, as: :date
+    = f.input :transaction_type, as: :select, collection: Transaction::TRANSACTION_TYPES
 
   .form-actions
     = f.button :submit

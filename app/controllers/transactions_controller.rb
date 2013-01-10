@@ -2,7 +2,8 @@ class TransactionsController < ApplicationController
   # GET /transactions
   # GET /transactions.json
   def index
-    @transactions = Transaction.all
+    @upcoming_transactions = Transaction.where(transaction_type: "upcoming").order("paid_at ASC").all
+    @cleared_transactions = Transaction.where(transaction_type: "cleared").order("paid_at DESC").all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -83,10 +84,11 @@ class TransactionsController < ApplicationController
 
   private
 
-    # Use this method to whitelist the permissible parameters. Example:
-    # params.require(:person).permit(:name, :age)
-    # Also, you can specialize this method with per-user checking of permissible attributes.
-    def transaction_params
-      params.require(:transaction).permit(:amount, :description, :paid_at, :payee, :transaction_type)
-    end
+  # Use this method to whitelist the permissible parameters. Example:
+  # params.require(:person).permit(:name, :age)
+  # Also, you can specialize this method with per-user checking of permissible attributes.
+  def transaction_params
+    params.require(:transaction).permit(:amount, :description, :paid_at, :payee, :transaction_type)
+  end
+
 end

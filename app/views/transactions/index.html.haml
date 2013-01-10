@@ -1,27 +1,11 @@
-%h1 Listing transactions
+%h1 Upcoming Transactions
 
-%table
-  %tr
-    %th Amount
-    %th Payee
-    %th Description
-    %th Paid at
-    %th Transaction type
-    %th
-    %th
-    %th
+= render partial: "transactions_table", locals: { transactions: @upcoming_transactions }
 
-  - @transactions.each do |transaction|
-    %tr
-      %td= transaction.amount
-      %td= transaction.payee
-      %td= transaction.description
-      %td= transaction.paid_at
-      %td= transaction.transaction_type
-      %td= link_to 'Show', transaction
-      %td= link_to 'Edit', edit_transaction_path(transaction)
-      %td= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' }
+%h1 Cleared Transactions
+
+= render partial: "transactions_table", locals: { transactions: @cleared_transactions }
 
 %br
 
-= link_to 'New Transaction', new_transaction_path
+= link_to 'New Transaction', new_transaction_path, class: "btn btn-primary"

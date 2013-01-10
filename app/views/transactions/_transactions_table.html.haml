@@ -1,0 +1,10 @@
+%table.table
+
+  %tr
+    %th Amount
+    %th Payee
+    %th Description
+    %th Paid at
+    %td
+
+  = render partial: "transaction_row", collection: transactions, as: :transaction

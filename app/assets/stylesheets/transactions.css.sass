@@ -1,7 +1,21 @@
-// Place all the styles related to the Transactions controller here.
-// They will automatically be included in application.css.
-// You can use Sass here: http://sass-lang.com/
-
-table
-  td.actions
+.transaction
+  .paid-at
+    width: 150px
+  .payee
+    width: 250px
+  .description
+  .amount
+    width: 100px
     text-align: right
+  .actions
+    width: 150px
+    text-align: right
+    .clear-transaction-button
+      display: none
+
+.blinking
+  background-color: linen
+
+.transaction[data-type="upcoming"]
+  .clear-transaction-button
+    display: inline

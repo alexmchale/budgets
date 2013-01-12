@@ -1,0 +1,13 @@
+<% if @transaction.valid? %>
+
+  $(function () {
+
+    $(".transaction[data-id=<%= @transaction.id %>]").blink(250, 50, function () {
+      <%= js_render_to_div "#upcoming-transactions", "transactions_table", transactions: @upcoming_transactions %>;
+      <%= js_render_to_div "#cleared-transactions", "transactions_table", transactions: @cleared_transactions %>;
+      $(".transaction[data-id=<%= @transaction.id %>]").blink(250, 50);
+    });
+
+  });
+
+<% end %>

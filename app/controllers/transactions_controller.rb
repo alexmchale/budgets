@@ -1,9 +1,13 @@
 class TransactionsController < ApplicationController
+
+  before_filter :convert_amount_to_integer
+
   # GET /transactions
   # GET /transactions.json
   def index
-    @upcoming_transactions = Transaction.where(transaction_type: "upcoming").order("paid_at ASC").all
-    @cleared_transactions = Transaction.where(transaction_type: "cleared").order("paid_at DESC").all
+    @upcoming_transactions = Transaction.upcoming.paid_asc.to_a
+    @cleared_transactions = Transaction.cleared.paid_desc.to_a
+    @posted_transactions = Transaction.posted.paid_desc.to_a
 
     respond_to do |format|
       format.html # index.html.erb
@@ -45,7 +49,7 @@ class TransactionsController < ApplicationController
 
     respond_to do |format|
       if @transaction.save
-        format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
+        format.html { redirect_to transactions_path, notice: 'Transaction was successfully created.' }
         format.json { render json: @transaction, status: :created, location: @transaction }
       else
         format.html { render action: "new" }
@@ -61,11 +65,16 @@ class TransactionsController < ApplicationController
 
     respond_to do |format|
       if @transaction.update_attributes(transaction_params)
-        format.html { redirect_to @transaction, notice: 'Transaction was successfully updated.' }
+        format.html { redirect_to transactions_path, notice: 'Transaction was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
         format.json { render json: @transaction.errors, status: :unprocessable_entity }
+      end
+
+      format.js do
+        @upcoming_transactions = Transaction.upcoming.paid_asc.to_a
+        @cleared_transactions = Transaction.cleared.paid_desc.to_a
       end
     end
   end
@@ -89,6 +98,12 @@ class TransactionsController < ApplicationController
   # Also, you can specialize this method with per-user checking of permissible attributes.
   def transaction_params
     params.require(:transaction).permit(:amount, :description, :paid_at, :payee, :transaction_type)
+  end
+
+  def convert_amount_to_integer
+    if params[:transaction] && params[:transaction][:amount]
+      params[:transaction][:amount] = (params[:transaction][:amount].to_f * 100).to_i
+    end
   end
 
 end

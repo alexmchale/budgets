@@ -1,10 +1,12 @@
 %table.table
 
-  %tr
-    %th Amount
-    %th Payee
-    %th Description
-    %th Paid at
-    %td
+  %thead
+    %tr.transaction
+      %th.paid-at Paid at
+      %th.payee Payee
+      %th.description Description
+      %th.amount Amount
+      %td.actions
 
-  = render partial: "transaction_row", collection: transactions, as: :transaction
+  %tbody
+    = render partial: "transaction_row", collection: transactions, as: :transaction

@@ -1,10 +1,17 @@
 %h1 Upcoming Transactions
 
-= render partial: "transactions_table", locals: { transactions: @upcoming_transactions }
+#upcoming-transactions
+  = render partial: "transactions_table", locals: { transactions: @upcoming_transactions }
 
 %h1 Cleared Transactions
 
-= render partial: "transactions_table", locals: { transactions: @cleared_transactions }
+#cleared-transactions
+  = render partial: "transactions_table", locals: { transactions: @cleared_transactions }
+
+%h1 Posted Transactions
+
+#posted-transactions
+  = render partial: "transactions_table", locals: { transactions: @posted_transactions }
 
 %br
 

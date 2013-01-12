@@ -1,7 +1,25 @@
-%tr
-  %td= number_to_currency transaction.amount.to_i / 100.0
-  %td= transaction.payee
-  %td= transaction.description
-  %td= transaction.paid_at.to_date
+%tr.transaction{data: { id: transaction.id, type: transaction.transaction_type }}
+
+  %td.paid-at
+    = transaction.paid_at.to_date
+
+  %td.payee
+    = transaction.payee
+
+  %td.description
+    = transaction.description
+
+  %td.amount
+    = number_to_currency transaction.amount.to_i / 100.0
+
   %td.actions
-    = link_to raw('<i class="icon-ok"></i>'), "#", class: "btn"
+    - if transaction.upcoming?
+      = link_to raw('<i class="icon-ok"></i>'),
+        update_transaction_path(transaction, transaction: { transaction_type: "cleared" }),
+        class: "btn clear-transaction-button",
+        remote: true
+    - elsif transaction.cleared?
+      = link_to raw('<i class="icon-circle-arrow-up"></i>'),
+        update_transaction_path(transaction, transaction: { transaction_type: "upcoming" }),
+        class: "btn reschedule-transaction-button",
+        remote: true

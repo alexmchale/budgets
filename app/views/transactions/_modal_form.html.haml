@@ -1,0 +1,28 @@
+= simple_form_for transaction, remote: true do |f|
+
+  = f.hidden_field :transaction_type, value: "upcoming"
+
+  .span3
+    = f.input :debit, as: :string
+    = f.input :payee, placeholder: "Acme Corporation"
+    = f.input :paid_at, as: :string, placeholder: "2013-05-15"
+  .span3
+    = f.input :credit, as: :string
+    = f.input :description, placeholder: "Error prone contraptions"
+
+  .transaction-frequency-options
+    .span2
+      = f.input :frequency, as: :select, collection: Transaction::FREQUENCIES, include_blank: false
+    .span1
+      = f.input :repeat_count, as: :string, placeholder: "1"
+
+  <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+
+:javascript
+
+  $(function () {
+    $("#transaction_debit").whenVisible(function () {
+      console.log($("#transaction_debit"));
+      $("#transaction_debit").focus();
+    });
+  });

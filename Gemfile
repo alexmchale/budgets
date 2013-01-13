@@ -4,6 +4,7 @@ gem 'rails', '3.2.11'
 gem 'pg'
 
 gem 'bcrypt-ruby'
+gem 'chronic'
 gem 'haml-rails'
 gem 'jquery-rails'
 gem 'onload_js-rails'

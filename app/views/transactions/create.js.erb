@@ -1,0 +1,11 @@
+<% if @transaction.valid? %>
+
+  $("#new-transaction-modal").modal("hide")
+  <%= js_render_to_div "#upcoming-transactions", "transactions_table", transactions: @upcoming_transactions %>
+  <%= js_render_to_div "#cleared-transactions", "transactions_table", transactions: @cleared_transactions %>
+
+<% else %>
+
+  <%= js_render_to_div "#new-transaction-modal .modal-body", "modal_form", transaction: @transaction %>;
+
+<% end %>

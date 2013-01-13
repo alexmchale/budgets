@@ -1,18 +1,40 @@
-%h1 Upcoming Transactions
+#transactions-header
+  %h1 Budgets
 
-#upcoming-transactions
-  = render partial: "transactions_table", locals: { transactions: @upcoming_transactions }
+  .actions
+    .btn-group{"data-toggle" => "buttons-checkbox"}
+      %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#upcoming-transactions-container" }} Upcoming
+      %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#cleared-transactions-container"}} Cleared
+      %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#posted-transactions-container"}} Posted
 
-%h1 Cleared Transactions
+#upcoming-transactions-container.in.collapse
+  %h2 Upcoming Transactions
+  #upcoming-transactions
+    = render partial: "transactions_table", locals: { transactions: @upcoming_transactions }
 
-#cleared-transactions
-  = render partial: "transactions_table", locals: { transactions: @cleared_transactions }
+#cleared-transactions-container.in.collapse
+  %h2 Cleared Transactions
+  #cleared-transactions
+    = render partial: "transactions_table", locals: { transactions: @cleared_transactions }
 
-%h1 Posted Transactions
-
-#posted-transactions
-  = render partial: "transactions_table", locals: { transactions: @posted_transactions }
+#posted-transactions-container.in.collapse
+  %h2 Posted Transactions
+  #posted-transactions
+    = render partial: "transactions_table", locals: { transactions: @posted_transactions }
 
 %br
 
-= link_to 'New Transaction', new_transaction_path, class: "btn btn-primary"
+= link_to raw('<i class="icon-calendar icon-white"></i> Schedule Transaction'),
+    new_transaction_path,
+    class: "btn btn-primary",
+    data: { toggle: "modal", target: "#new-transaction-modal" }
+
+#new-transaction-modal.modal.fade.hide
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Schedule Transaction
+  .modal-body
+    = render partial: 'modal_form', locals: { transaction: Transaction.new }
+  .modal-footer
+    = link_to "Close", "#", class: "btn", data: { dismiss: "modal" }
+    = link_to "Create transactions", "#", class: "btn btn-primary", data: { submit: "modal-form" }

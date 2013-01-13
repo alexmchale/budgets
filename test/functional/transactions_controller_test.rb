@@ -24,7 +24,7 @@ class TransactionsControllerTest < ActionController::TestCase
       post :create, transaction: { amount: @transaction.amount, description: @transaction.description, paid_at: @transaction.paid_at, payee: @transaction.payee, transaction_type: @transaction.transaction_type }
     end
 
-    assert_redirected_to transaction_path(assigns(:transaction))
+    assert_redirected_to transactions_path
   end
 
   test "should show transaction" do
@@ -39,7 +39,7 @@ class TransactionsControllerTest < ActionController::TestCase
 
   test "should update transaction" do
     put :update, id: @transaction, transaction: { amount: @transaction.amount, description: @transaction.description, paid_at: @transaction.paid_at, payee: @transaction.payee, transaction_type: @transaction.transaction_type }
-    assert_redirected_to transaction_path(assigns(:transaction))
+    assert_redirected_to transactions_path
   end
 
   test "should destroy transaction" do

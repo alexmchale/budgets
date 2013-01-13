@@ -11,16 +11,36 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130110104821) do
+ActiveRecord::Schema.define(:version => 20130113043122) do
+
+  create_table "accounts", :force => true do |t|
+    t.integer  "stated_balance"
+    t.integer  "posted_balance"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "recurrences", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "frequency"
+    t.date     "starts_at"
+    t.date     "ends_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "recurrences", ["account_id"], :name => "index_recurrences_on_account_id"
 
   create_table "transactions", :force => true do |t|
     t.integer  "amount"
     t.string   "payee"
     t.string   "description"
-    t.datetime "paid_at"
+    t.date     "paid_at"
     t.string   "transaction_type"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "account_id"
+    t.integer  "balance"
   end
 
 end

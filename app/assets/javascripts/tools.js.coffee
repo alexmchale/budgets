@@ -2,8 +2,6 @@ $.fn.extend
 
   blink: (duration, period, fn) ->
 
-    console.log [ duration, period ]
-
     e = $(this)
 
     if duration <= 0
@@ -19,3 +17,13 @@ $.fn.extend
       setTimeout callback, period
 
     return this
+
+  whenVisible: (fn) ->
+
+    $this = $(this)
+
+    if $this.is(":visible")
+      fn.call(this)
+    else
+      fn1 = -> $this.whenVisible fn
+      setTimeout fn1, 100

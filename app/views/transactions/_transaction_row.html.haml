@@ -1,16 +1,25 @@
 %tr.transaction{data: { id: transaction.id, type: transaction.transaction_type }}
 
-  %td.paid-at
+  %td.paid-at.editable{data: { name: "paid_at" }}
     = transaction.paid_at.to_date
 
-  %td.payee
+  %td.payee.editable{data: { name: "payee" }}
     = transaction.payee
 
-  %td.description
+  %td.description.editable{data: { name: "description" }}
     = transaction.description
 
-  %td.amount
-    = number_to_currency transaction.amount.to_i / 100.0
+  %td.debit.amount.editable{data: { name: "debit" }}
+    - if transaction.amount < 0
+      = format_money transaction.amount.to_i.abs
+
+  %td.credit.amount.editable{data: { name: "credit" }}
+    - if transaction.amount >= 0
+      = format_money transaction.amount.to_i
+
+  %td.balance.amount
+    - if transaction.balance
+      = format_money transaction.balance.to_i
 
   %td.actions
     - if transaction.upcoming?
@@ -22,4 +31,13 @@
       = link_to raw('<i class="icon-circle-arrow-up"></i>'),
         update_transaction_path(transaction, transaction: { transaction_type: "upcoming" }),
         class: "btn reschedule-transaction-button",
+        remote: true
+    - if transaction.upcoming? || transaction.cleared?
+      = link_to raw('<i class="icon-calendar"></i>'),
+        new_transaction_path(transaction_id: transaction.id),
+        class: "btn copy-transaction-button",
+        data: { toggle: "modal", target: "#new-transaction-modal" }
+      = link_to raw('<i class="icon-remove"></i>'),
+        destroy_transaction_path(transaction),
+        class: "btn remove-transaction-button",
         remote: true

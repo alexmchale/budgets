@@ -1,14 +1,32 @@
+@import "compass/utilities/general/clearfix"
+
+body
+  font-family: "Open Sans Condensed", sans-serif
+
+#transactions-header
+  +clearfix
+  margin-top: 50px
+  h1
+    float: left
+    display: inline-block
+  .actions
+    float: right
+    padding-top: 10px
+
 .transaction
   .paid-at
-    width: 150px
+    width: 100px
   .payee
-    width: 250px
+    width: 150px
   .description
   .amount
     width: 100px
     text-align: right
+  .balance
+    width: 100px
+    text-align: right
   .actions
-    width: 150px
+    width: 135px
     text-align: right
     .clear-transaction-button
       display: none
@@ -18,4 +36,22 @@
 
 .transaction[data-type="upcoming"]
   .clear-transaction-button
-    display: inline
+    display: inline-block
+
+#new-transaction-modal
+  width: 500px
+  .modal-header
+    padding: 13px 20px
+  .modal-body
+    padding-left: 0px
+    padding-right: 0px
+  .modal-footer
+    padding: 13px 20px
+  .form-fields
+    input, select
+      width: 100%
+  .transaction-frequency-options
+    select
+      width: 100%
+    input
+      width: 46px

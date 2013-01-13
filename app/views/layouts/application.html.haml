@@ -6,10 +6,11 @@
     %title Rails Skeleton 3.2
 
     = stylesheet_link_tag :application, media: "all"
+    = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700"
     = csrf_meta_tags
+    = javascript_include_tag :application
 
   %body
     .container= yield
 
-    = javascript_include_tag :application
     = onload_tag

@@ -9,18 +9,15 @@ class Transaction < ActiveRecord::Base
     "Posted"   => "posted"
   }
 
-  FREQUENCIES = {
-    "Once"          => "once",
-    "Every 2 Weeks" => "biweekly",
-    "Monthly"       => "monthly"
-  }
-
   belongs_to :recurrence
+
+  accepts_nested_attributes_for :recurrence
 
   validates_presence_of :amount
   validates_numericality_of :amount
   validates_presence_of :paid_at
   validates_inclusion_of :transaction_type, in: TRANSACTION_TYPES.values
+  validate :validate_money
 
   scope :upcoming, where(transaction_type: "upcoming")
   scope :cleared, where(transaction_type: "cleared")
@@ -35,5 +32,14 @@ class Transaction < ActiveRecord::Base
 
   def debit  ; format_money(-amount) if amount && amount < 0  ; end
   def credit ; format_money(amount)  if amount && amount >= 0 ; end
+
+  protected
+
+  def validate_money
+    if self.amount.blank?
+      self.errors.add(:debit, "must have a debit or a credit")
+      self.errors.add(:credit, "must have a debit or a credit")
+    end
+  end
 
 end

@@ -2,27 +2,36 @@
 
   = f.hidden_field :transaction_type, value: "upcoming"
 
-  .span3
-    = f.input :debit, as: :string
-    = f.input :payee, placeholder: "Acme Corporation"
-    = f.input :paid_at, as: :string, placeholder: "2013-05-15"
-  .span3
-    = f.input :credit, as: :string
-    = f.input :description, placeholder: "Error prone contraptions"
+  .row
+    .span3
+      = f.input :paid_at, as: :string, placeholder: "2013-05-15"
+    .span3
 
-  .transaction-frequency-options
-    .span2
-      = f.input :frequency, as: :select, collection: Transaction::FREQUENCIES, include_blank: false
-    .span1
-      = f.input :repeat_count, as: :string, placeholder: "1"
+  .row
+    .span3
+      = f.input :debit, as: :string
+    .span3
+      = f.input :credit, as: :string
+
+  .row
+    .span3
+      = f.input :payee, placeholder: "Acme Corporation"
+    .span3
+      = f.input :description, placeholder: "Error prone contraptions"
+
+  .row
+    = f.simple_fields_for :recurrence do |f1|
+      .span3
+        = f1.input :frequency, as: :select, collection: Recurrence::FREQUENCIES, include_blank: false
+      .span3
+        = f1.input :ends_at, as: :string
 
   <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
 
 :javascript
 
   $(function () {
-    $("#transaction_debit").whenVisible(function () {
-      console.log($("#transaction_debit"));
-      $("#transaction_debit").focus();
+    $("#transaction_paid_at").whenVisible(function () {
+      $("#transaction_paid_at").focus();
     });
   });

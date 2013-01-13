@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130113043122) do
+ActiveRecord::Schema.define(:version => 20130113122718) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "stated_balance"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20130113043122) do
     t.datetime "updated_at",       :null => false
     t.integer  "account_id"
     t.integer  "balance"
+    t.integer  "recurrence_id"
   end
 
 end

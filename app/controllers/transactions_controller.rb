@@ -30,6 +30,7 @@ class TransactionsController < ApplicationController
   # GET /transactions/new.json
   def new
     @transaction = Transaction.new
+    @transaction.recurrence = Recurrence.new
 
     if params[:transaction_id].present?
       source = Transaction.find(params[:transaction_id])
@@ -123,30 +124,45 @@ class TransactionsController < ApplicationController
   # params.require(:person).permit(:name, :age)
   # Also, you can specialize this method with per-user checking of permissible attributes.
   def transaction_params
-    params.require(:transaction).permit(:amount, :description, :paid_at, :payee, :transaction_type, :debit, :credit)
+    extras = { recurrence_attributes: [ :frequency, :starts_at, :ends_at ] }
+    params.require(:transaction).permit(:amount, :description, :paid_at, :payee, :transaction_type, :debit, :credit, extras)
   end
 
   def cast_params
+    cast_date = Proc.new do |hash, field|
+      if hash.present? && hash[field].present?
+        date = Chronic.parse(hash[field]).try(:to_date)
+        date ||= Date.parse(hash[field])
+        hash[field] = date if date
+      end
+    end
+
+    # Cast Transaction parameters.
+
     transaction = params[:transaction]
-    return if transaction.blank?
 
-    if transaction[:debit].present?
-      transaction[:amount] = "-#{transaction.delete :debit}"
+    if transaction.present?
+      if transaction[:debit].present?
+        transaction[:amount] = "-#{transaction.delete :debit}"
+      end
+      if transaction[:credit].present?
+        transaction[:amount] = transaction.delete(:credit)
+      end
+      if transaction[:amount].present?
+        transaction[:amount].gsub! /[^0-9\.\-]/, ""
+        transaction[:amount] = (transaction[:amount].to_f * 100).to_i
+      end
+      cast_date.call transaction, :paid_at
     end
 
-    if transaction[:credit].present?
-      transaction[:amount] = transaction.delete(:credit)
-    end
+    # Cast Recurrence parameters.
 
-    if transaction[:amount].present?
-      transaction[:amount].gsub! /[^0-9\.\-]/, ""
-      transaction[:amount] = (transaction[:amount].to_f * 100).to_i
-    end
+    recurrence = transaction[:recurrence_attributes] if transaction.present?
 
-    if transaction[:paid_at].present?
-      paid_at = Chronic.parse(transaction[:paid_at]).try(:to_date)
-      paid_at ||= Date.parse(transaction[:paid_at])
-      transaction[:paid_at] = paid_at if paid_at
+    if recurrence.present?
+      cast_date.call recurrence, :starts_at
+      cast_date.call recurrence, :ends_at
+      recurrence[:starts_at] = transaction[:paid_at] if recurrence[:starts_at].blank?
     end
   end
 

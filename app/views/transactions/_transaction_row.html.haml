@@ -22,12 +22,7 @@
       = format_money transaction.balance.to_i
 
   %td.actions
-    - if transaction.upcoming?
-      = link_to raw('<i class="icon-ok"></i>'),
-        update_transaction_path(transaction, transaction: { transaction_type: "cleared" }),
-        class: "btn clear-transaction-button",
-        remote: true
-    - elsif transaction.cleared?
+    - if transaction.cleared?
       = link_to raw('<i class="icon-circle-arrow-up"></i>'),
         update_transaction_path(transaction, transaction: { transaction_type: "upcoming" }),
         class: "btn reschedule-transaction-button",
@@ -37,6 +32,12 @@
         new_transaction_path(transaction_id: transaction.id),
         class: "btn copy-transaction-button",
         data: { toggle: "modal", target: "#new-transaction-modal" }
+    - if transaction.upcoming?
+      = link_to raw('<i class="icon-ok"></i>'),
+        update_transaction_path(transaction, transaction: { transaction_type: "cleared" }),
+        class: "btn clear-transaction-button",
+        remote: true
+    - if transaction.upcoming? || transaction.cleared?
       = link_to raw('<i class="icon-remove"></i>'),
         destroy_transaction_path(transaction),
         class: "btn remove-transaction-button",

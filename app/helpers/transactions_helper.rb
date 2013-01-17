@@ -16,4 +16,22 @@ module TransactionsHelper
     end
   end
 
+  def transaction_tr(transaction, &block)
+    data_fields = {
+      id:         transaction.id,
+      type:       transaction.transaction_type,
+      frequency:  transaction.recurrence.frequency,
+      first:      if transaction.first? then "1" else "0" end,
+      last:       if transaction.last?  then "1" else "0" end
+    }.map do |k, v|
+      %[data-#{h k}="#{h v}"]
+    end.join(" ")
+
+    raw <<-HTML
+      <tr class="transaction" #{data_fields}>
+        #{capture &block}
+      </tr>
+    HTML
+  end
+
 end

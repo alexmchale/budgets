@@ -1,0 +1,40 @@
+= simple_form_for recurrence, remote: true do |f|
+
+  = f.hidden_field :transaction_type, value: "upcoming"
+
+  .row
+    .span3
+      = f.input :frequency, as: :select, collection: TransactionBase::FREQUENCIES, include_blank: false
+    .span3
+
+  .row
+    .span3
+      = f.input :starts_at, as: :string, placeholder: "2013-05-15"
+    .span3
+      = f.input :ends_at, as: :string
+
+  .row
+    .span3
+      = f.input :debit, as: :string
+    .span3
+      = f.input :credit, as: :string
+
+  .row
+    .span3
+      = f.input :payee, placeholder: "Acme Corporation"
+    .span3
+      = f.input :description, placeholder: "Error prone contraptions"
+
+  <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+
+:javascript
+
+  $(function () {
+    var errorField = $(".control-group.error input, .control-group.error select");
+    var startsAtField = $("#recurrence_starts_at");
+    var focusField = (errorField.length > 0) ? $(errorField.get(0)) : startsAtField;
+
+    focusField.whenVisible(function () {
+      focusField.focus();
+    });
+  });

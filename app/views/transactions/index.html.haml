@@ -25,16 +25,15 @@
 %br
 
 = link_to raw('<i class="icon-calendar icon-white"></i> Schedule Transaction'),
-    new_transaction_path,
+    new_recurrence_path,
     class: "btn btn-primary",
     data: { toggle: "modal", target: "#new-transaction-modal" }
 
 #new-transaction-modal.modal.fade.hide
   .modal-header
     %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-    %h3 Schedule Transaction
+    %h3 Schedule Transactions
   .modal-body
-    = render partial: 'modal_form', locals: { transaction: Transaction.new }
   .modal-footer
     = link_to "Close", "#", class: "btn", data: { dismiss: "modal" }
     = link_to "Create transactions", "#", class: "btn btn-primary", data: { submit: "modal-form" }

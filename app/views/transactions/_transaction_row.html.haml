@@ -1,4 +1,4 @@
-%tr.transaction{data: { id: transaction.id, type: transaction.transaction_type }}
+= transaction_tr transaction do
 
   %td.paid-at.editable{data: { name: "paid_at" }}
     = transaction.paid_at.to_date
@@ -27,11 +27,11 @@
         update_transaction_path(transaction, transaction: { transaction_type: "upcoming" }),
         class: "btn reschedule-transaction-button",
         remote: true
-    - if transaction.upcoming? || transaction.cleared?
-      = link_to raw('<i class="icon-calendar"></i>'),
-        new_transaction_path(transaction_id: transaction.id),
-        class: "btn copy-transaction-button",
-        data: { toggle: "modal", target: "#new-transaction-modal" }
+    /- if transaction.upcoming? || transaction.cleared?
+    /  = link_to raw('<i class="icon-calendar"></i>'),
+    /    new_transaction_path(transaction_id: transaction.id),
+    /    class: "btn copy-transaction-button",
+    /    data: { toggle: "modal", target: "#new-transaction-modal" }
     - if transaction.upcoming?
       = link_to raw('<i class="icon-ok"></i>'),
         update_transaction_path(transaction, transaction: { transaction_type: "cleared" }),

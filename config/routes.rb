@@ -7,6 +7,8 @@ RailsSkeleton::Application.routes.draw do
     end
   end
 
+  resources :recurrences
+
   root to: "transactions#index"
 
 end

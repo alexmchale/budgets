@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130115113557) do
+ActiveRecord::Schema.define(:version => 20130120101248) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "stated_balance"
@@ -21,31 +21,31 @@ ActiveRecord::Schema.define(:version => 20130115113557) do
   end
 
   create_table "recurrences", :force => true do |t|
-    t.integer  "account_id"
-    t.string   "frequency"
-    t.date     "starts_at"
+    t.integer  "account_id",       :null => false
+    t.string   "frequency",        :null => false
+    t.date     "starts_at",        :null => false
     t.date     "ends_at"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
-    t.integer  "amount"
-    t.string   "payee"
-    t.string   "description"
-    t.string   "transaction_type"
+    t.integer  "amount",           :null => false
+    t.string   "payee",            :null => false
+    t.string   "description",      :null => false
+    t.string   "transaction_type", :null => false
   end
 
   add_index "recurrences", ["account_id"], :name => "index_recurrences_on_account_id"
 
   create_table "transactions", :force => true do |t|
-    t.integer  "amount"
-    t.string   "payee"
-    t.string   "description"
-    t.date     "paid_at"
-    t.string   "transaction_type"
+    t.integer  "amount",           :null => false
+    t.string   "payee",            :null => false
+    t.string   "description",      :null => false
+    t.date     "paid_at",          :null => false
+    t.string   "transaction_type", :null => false
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
-    t.integer  "account_id"
+    t.integer  "account_id",       :null => false
     t.integer  "balance"
-    t.integer  "recurrence_id"
+    t.integer  "recurrence_id",    :null => false
   end
 
 end

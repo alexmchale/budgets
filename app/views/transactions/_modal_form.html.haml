@@ -27,11 +27,3 @@
         = f1.input :ends_at, as: :string
 
   <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
-
-:javascript
-
-  $(function () {
-    $("#transaction_paid_at").whenVisible(function () {
-      $("#transaction_paid_at").focus();
-    });
-  });

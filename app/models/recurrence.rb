@@ -2,8 +2,9 @@ class Recurrence < ActiveRecord::Base
 
   include TransactionBase
 
-  validates_inclusion_of :frequency, in: FREQUENCIES.values
-  validates_presence_of :starts_at
+  validates :frequency, inclusion: { in: FREQUENCIES.values }
+  validates :payee, presence: true
+  validates :starts_at, presence: true
 
   belongs_to :account
   has_many :transactions
@@ -15,7 +16,7 @@ class Recurrence < ActiveRecord::Base
     date = self.next_date nil
 
     while date && date <= through && (!ends_at || date <= ends_at)
-      if !existing_dates.include?(date) 
+      if !existing_dates.include?(date)
         Transaction.create! \
           account_id:       self.account_id,
           recurrence_id:    self.id,

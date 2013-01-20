@@ -17,6 +17,7 @@ class Transaction < ActiveRecord::Base
   scope :posted, includes(:recurrence).where(transaction_type: "posted")
   scope :paid_asc, order("paid_at ASC")
   scope :paid_desc, order("paid_at DESC, amount ASC")
+  scope :budget_through, -> date { where("paid_at < ? OR (paid_at <= ? AND amount < 0)", date, date) }
 
   ### Validations ###
 

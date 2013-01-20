@@ -36,10 +36,15 @@ module TransactionableController
           hash.delete :credit
         end
       end
+
+      # Query parameters.
+
+      @final_date = Date.parse(params[:end_date]) if params[:end_date].present?
+      @final_date ||= Date.today.next_month.beginning_of_month
     end
 
     def load_upcoming_transactions
-      @upcoming_transactions = Transaction.upcoming.paid_desc.to_a
+      @upcoming_transactions = Transaction.upcoming.paid_desc.budget_through(@final_date).to_a
       @upcoming_transactions.reverse.inject(0) do |balance, transaction|
         transaction.balance = balance + transaction.amount
       end

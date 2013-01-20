@@ -82,8 +82,23 @@ class TransactionsController < ApplicationController
   def update
     @transaction = Transaction.find(params[:id])
 
+    if params[:transaction].present?
+      case params[:update_mode]
+      when "update-all"
+        Transaction.where(recurrence_id: @transaction.recurrence_id).each do |transaction|
+          transaction.update_attributes! transaction_params
+        end
+        @transaction.recurrence.update_attributes! transaction_params
+      when "update-later"
+        Transaction.where("recurrence_id = ? AND paid_at >= ?", @transaction.recurrence_id, @transaction.paid_at).each do |transaction|
+          transaction.update_attributes! transaction_params
+        end
+        @transaction.recurrence.update_attributes! transaction_params
+      end
+    end
+
     respond_to do |format|
-      if @transaction.update_attributes(transaction_params)
+      if params[:transaction].blank? || @transaction.update_attributes(transaction_params)
         format.html { redirect_to transactions_path, notice: 'Transaction was successfully updated.' }
         format.json { head :no_content }
       else

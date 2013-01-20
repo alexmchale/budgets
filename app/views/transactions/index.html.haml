@@ -37,3 +37,15 @@
   .modal-footer
     = link_to "Close", "#", class: "btn", data: { dismiss: "modal" }
     = link_to "Create transactions", "#", class: "btn btn-primary", data: { submit: "modal-form" }
+
+#confirm-transaction-change-modal.modal.fade.hide
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Update Transactions
+  .modal-body
+    The transaction you are editing is one of several. How would you like to update it?
+  .modal-footer
+    = link_to "Cancel", "#", class: "btn update-none"
+    = link_to "Update all", "#", class: "btn btn-danger update-all"
+    = link_to "Update this and all later transactions", "#", class: "btn btn-warning update-later"
+    = link_to "Update just this transaction", "#", class: "btn btn-success update-one"

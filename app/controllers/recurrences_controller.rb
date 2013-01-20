@@ -45,6 +45,7 @@ class RecurrencesController < ApplicationController
   # POST /recurrences.json
   def create
     @recurrence = Recurrence.new(recurrence_params)
+    @recurrence.account = current_account
 
     respond_to do |format|
       if @recurrence.save

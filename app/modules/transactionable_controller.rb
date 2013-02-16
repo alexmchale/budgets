@@ -45,7 +45,7 @@ module TransactionableController
 
     def load_upcoming_transactions
       @upcoming_transactions = Transaction.upcoming.paid_desc.budget_through(@final_date).to_a
-      @upcoming_transactions.reverse.inject(0) do |balance, transaction|
+      @upcoming_transactions.reverse.inject(current_account.posted_balance) do |balance, transaction|
         transaction.balance = balance + transaction.amount
       end
     end
@@ -54,9 +54,21 @@ module TransactionableController
       @cleared_transactions = Transaction.cleared.paid_desc.to_a
     end
 
+    def load_posted_transactions
+      @posted_transactions = Transaction.pending.paid_desc.to_a + Transaction.posted.paid_desc.to_a
+
+      balance = current_account.posted_balance
+
+      @posted_transactions.each do |transaction|
+        transaction.balance = balance
+        balance -= transaction.amount
+      end
+    end
+
     def load_dynamic_transactions
       load_upcoming_transactions
       load_cleared_transactions
+      load_posted_transactions
     end
 
   end

@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130120101248) do
+ActiveRecord::Schema.define(:version => 20130216122617) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "stated_balance"
     t.integer  "posted_balance"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.text     "polling_parameters"
   end
 
   create_table "recurrences", :force => true do |t|
@@ -45,7 +46,7 @@ ActiveRecord::Schema.define(:version => 20130120101248) do
     t.datetime "updated_at",       :null => false
     t.integer  "account_id",       :null => false
     t.integer  "balance"
-    t.integer  "recurrence_id",    :null => false
+    t.integer  "recurrence_id"
   end
 
 end

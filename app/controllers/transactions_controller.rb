@@ -7,7 +7,7 @@ class TransactionsController < ApplicationController
   def index
     load_upcoming_transactions
     load_cleared_transactions
-    @posted_transactions = Transaction.posted.paid_desc.to_a
+    load_posted_transactions
 
     respond_to do |format|
       format.html # index.html.erb

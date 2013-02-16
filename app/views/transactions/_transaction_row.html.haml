@@ -3,11 +3,9 @@
   %td.paid-at{data: { name: "paid_at" }}
     = transaction.paid_at.to_date
 
-  %td.payee.editable{data: { name: "payee" }}
-    = transaction.payee
-
-  %td.description.editable{data: { name: "description" }}
-    = transaction.description
+  %td.payee
+    .editable{data: { name: "payee" }}= transaction.payee
+    .editable{data: { name: "description" }}= transaction.description
 
   %td.debit.amount.editable{data: { name: "debit" }}
     - if transaction.amount < 0

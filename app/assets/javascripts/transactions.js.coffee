@@ -35,10 +35,13 @@ $ ->
     $this        = $(this)
     $field       = $this.closest("td")
     $transaction = $this.closest(".transaction")
-    isLast       = $transaction.data("last") == "1"
+    isFirst      = $transaction.data("first") == 1
+    isLast       = $transaction.data("last") == 1
     id           = $transaction.data("id")
     name         = $field.data("name")
     value        = $this.val()
+
+    console.log [ isFirst, isLast, $transaction.data("last") ]
 
     confirmTransactionChangeModal.data
       id:    id
@@ -47,6 +50,8 @@ $ ->
 
     if cancel
       postTransactionUpdateModel null
+    else if submit && isFirst && isLast
+      postTransactionUpdateModal "update-one"
     else if submit
       confirmTransactionChangeModal.modal("show")
 

@@ -9,6 +9,13 @@ RailsSkeleton::Application.routes.draw do
 
   resources :recurrences
 
+  resources :accounts do
+    member do
+      get :edit_balance
+      post :update_balance
+    end
+  end
+
   root to: "transactions#index"
 
 end

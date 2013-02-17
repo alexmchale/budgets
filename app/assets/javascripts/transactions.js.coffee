@@ -33,23 +33,26 @@ $ ->
     cancel       = e.which == 27
     submit       = e.which == 13
     $this        = $(this)
-    $field       = $this.closest("td")
+    $field       = $this.closest(".editing")
     $transaction = $this.closest(".transaction")
     isFirst      = $transaction.data("first") == 1
     isLast       = $transaction.data("last") == 1
     id           = $transaction.data("id")
     name         = $field.data("name")
     value        = $this.val()
-
-    console.log [ isFirst, isLast, $transaction.data("last") ]
+    original     = $field.data("original").toString()
 
     confirmTransactionChangeModal.data
       id:    id
       name:  name
       value: value
 
-    if cancel
-      postTransactionUpdateModel null
+    if value == original
+      $field.removeClass "editing"
+      $field.addClass "editable"
+      $field.text original
+    else if cancel
+      postTransactionUpdateModal null
     else if submit && isFirst && isLast
       postTransactionUpdateModal "update-one"
     else if submit

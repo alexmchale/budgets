@@ -5,7 +5,8 @@
     .btn-group{"data-toggle" => "buttons-checkbox"}
       %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#upcoming-transactions-container" }} Upcoming
       %button.btn.btn-primary{:type => "button", :data => { :toggle => "collapse", :target => "#cleared-transactions-container"}} Cleared
-      %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#posted-transactions-container"}} Posted
+      - if @posted_transactions.present?
+        %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#posted-transactions-container"}} Posted
 
 #upcoming-transactions-container.in.collapse
   %h2 Upcoming Transactions
@@ -17,10 +18,11 @@
   #cleared-transactions
     = render partial: "transactions_table", locals: { transactions: @cleared_transactions }
 
-#posted-transactions-container.in.collapse
-  %h2 Posted Transactions
-  #posted-transactions
-    = render partial: "transactions_table", locals: { transactions: @posted_transactions }
+- if @posted_transactions.present?
+  #posted-transactions-container.in.collapse
+    %h2 Posted Transactions
+    #posted-transactions
+      = render partial: "transactions_table", locals: { transactions: @posted_transactions }
 
 .actions
 

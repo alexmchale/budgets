@@ -37,4 +37,37 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def options_for_time_window
+    {
+      "Next Two Weeks" => "2weeks",
+      "This Month"     => "month",
+      "This Year"      => "year",
+      "Two Months"     => "2months",
+      "Three Months"   => "3months",
+      "Six Months"     => "6months",
+      "Twelve Months"  => "12months"
+    }
+  end
+
+  def upcoming_time_window
+    $redis.get("account:#{self.id}:upcoming_time_window") || "month"
+  end
+
+  def upcoming_time_window=(time_window)
+    time_window = "month" unless options_for_time_window.values.include?(time_window.to_s)
+    $redis.set("account:#{self.id}:upcoming_time_window", time_window.to_s)
+  end
+
+  def upcoming_time_window_end
+    case upcoming_time_window
+    when "2weeks"   then 14.days.from_now.to_date
+    when "month"    then Date.today.end_of_month
+    when "year"     then Date.today.end_of_year
+    when "2months"  then Date.today.next_month.end_of_month
+    when "3months"  then Date.today.next_month.next_month.end_of_month
+    when "6months"  then Date.today.next_month.next_month.next_month.next_month.next_month.end_of_month
+    when "12months" then Date.today.next_month.next_month.next_month.next_month.next_month.next_month.next_month.next_month.next_month.next_month.next_month.end_of_month
+    end
+  end
+
 end

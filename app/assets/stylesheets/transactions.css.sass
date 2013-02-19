@@ -14,6 +14,13 @@ body
     float: right
     padding-top: 10px
 
+h2
+  +clearfix
+  .actions
+    float: right
+    display: inline-block
+    padding-right: 5px
+
 .transaction
   .paid-at
     width: 100px
@@ -30,6 +37,18 @@ body
       display: none
   .editable
     min-height: 20px
+  &.january, &.march, &.may, &.july, &.september, &.november
+    &.even
+      background-color: #FFFFEE
+    &.odd
+      background-color: #FFFFF9
+  &.february, &.april, &.june, &.august, &.october, &.december
+    &.even
+      background-color: #EEFFEE
+    &.odd
+      background-color: #F9FFF9
+  &.month-changed
+    border-top: 2px solid #AAA
 
 .blinking
   background-color: linen

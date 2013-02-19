@@ -1,0 +1,9 @@
+$(function () {
+
+  <%= js_render_to_div "#upcoming-transactions", "transactions_table", transactions: @upcoming_transactions %>;
+  <%= js_render_to_div "#cleared-transactions", "transactions_table", transactions: @cleared_transactions %>;
+  <%= js_render_to_div "#posted-transactions", "transactions_table", transactions: @posted_transactions %>;
+
+  $("img.render-loading").hide();
+
+});

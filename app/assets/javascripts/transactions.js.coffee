@@ -78,3 +78,11 @@ $ ->
   $(document).on "click", "a.update-all", -> postTransactionUpdateModal "update-all"
   $(document).on "click", "a.update-one", -> postTransactionUpdateModal "update-one"
   $(document).on "click", "a.update-later", -> postTransactionUpdateModal "update-later"
+
+  $("#upcoming_transactions_time_window").on "change", ->
+    $select  = $(this)
+    $loading = $select.siblings("img.render-loading")
+    value    = $select.val()
+    params   = { time_window: value }
+    $loading.show()
+    $.getScript("/transactions/update_upcoming_time_window?#{$.param params}")

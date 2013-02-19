@@ -123,6 +123,12 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def update_upcoming_time_window
+    current_account.upcoming_time_window = params[:time_window]
+    load_dynamic_transactions
+    render "render.js.erb"
+  end
+
   private
 
   # Use this method to whitelist the permissible parameters. Example:

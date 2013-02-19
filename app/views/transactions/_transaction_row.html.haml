@@ -1,4 +1,4 @@
-= transaction_tr transaction do
+= transaction_tr transaction, month_changed: month_changed do
 
   %td.paid-at{data: { name: "paid_at" }}
     .line1= transaction.paid_at.to_date

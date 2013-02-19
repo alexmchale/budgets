@@ -5,6 +5,9 @@ RailsSkeleton::Application.routes.draw do
       get "/update", as: "update", to: "transactions#update"
       get "/destroy", as: "destroy", to: "transactions#destroy"
     end
+    collection do
+      get :update_upcoming_time_window
+    end
   end
 
   resources :recurrences

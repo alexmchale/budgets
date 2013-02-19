@@ -9,7 +9,11 @@
         %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#posted-transactions-container"}} Posted
 
 #upcoming-transactions-container.in.collapse
-  %h2 Upcoming Transactions
+  %h2
+    Upcoming Transactions
+    .actions
+      = image_tag "ajax-loader.gif", class: "render-loading hide"
+      = select_tag "upcoming_transactions_time_window", options_for_select(current_account.options_for_time_window, current_account.upcoming_time_window)
   #upcoming-transactions
     = render partial: "transactions_table", locals: { transactions: @upcoming_transactions }
 

@@ -3,6 +3,8 @@ module TransactionableController
   module InstanceMethods
 
     def cast_params
+      # Define a proc to parse dates.
+
       cast_date = Proc.new do |hash, field|
         if hash.present? && hash[field].present?
           date = Chronic.parse(hash[field]).try(:to_date)
@@ -36,17 +38,12 @@ module TransactionableController
           hash.delete :credit
         end
       end
-
-      # Query parameters.
-
-      @final_date = Date.parse(params[:end_date]) if params[:end_date].present?
-      @final_date ||= Date.today.next_month.beginning_of_month
     end
 
     def load_upcoming_transactions
       balance = current_account.posted_balance || current_account.stated_balance || 0
 
-      @upcoming_transactions = current_account.transactions.upcoming.paid_desc.budget_through(@final_date).to_a
+      @upcoming_transactions = current_account.transactions.upcoming.paid_desc.budget_through(current_account.upcoming_time_window_end).to_a
 
       @upcoming_transactions.reverse.inject(balance) do |balance, transaction|
         transaction.balance = balance + transaction.amount

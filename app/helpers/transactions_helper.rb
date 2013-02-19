@@ -16,7 +16,7 @@ module TransactionsHelper
     end
   end
 
-  def transaction_tr(transaction, &block)
+  def transaction_tr(transaction, options = {}, &block)
     data_fields = {
       id:         transaction.id,
       type:       transaction.transaction_type,
@@ -27,8 +27,15 @@ module TransactionsHelper
       %[data-#{h k}="#{h v}"]
     end.join(" ")
 
+    klasses = [
+      "transaction",
+      transaction.paid_at.strftime("%B").downcase,
+      cycle("even", "odd"),
+      if options[:month_changed] then "month-changed" else "month-didnt-change" end
+    ]
+
     raw <<-HTML
-      <tr class="transaction" #{data_fields}>
+      <tr class="#{klasses.join ' '}" #{data_fields}>
         #{capture &block}
       </tr>
     HTML

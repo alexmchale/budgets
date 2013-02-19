@@ -10,4 +10,8 @@
       %td.actions
 
   %tbody
-    = render partial: "transactions/transaction_row", collection: transactions, as: :transaction
+    - prior_month = nil
+    - transactions.each do |transaction|
+      - month_changed = prior_month != nil && prior_month != transaction.paid_at.month
+      - prior_month = transaction.paid_at.month
+      = render partial: "transactions/transaction_row", locals: { transaction: transaction, month_changed: month_changed }

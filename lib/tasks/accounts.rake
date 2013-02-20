@@ -10,4 +10,14 @@ namespace :accounts do
 
   end
 
+  task :recur => [ :environment ] do
+
+    Recurrence.find_in_batches do |recurrences|
+      recurrences.each do |recurrence|
+        recurrence.create_transactions
+      end
+    end
+
+  end
+
 end

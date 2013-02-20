@@ -61,6 +61,18 @@
     = link_to "Update this and all later transactions", "#", class: "btn btn-warning update-later"
     = link_to "Update just this transaction", "#", class: "btn btn-success update-one"
 
+#confirm-transaction-delete-modal.modal.fade.hide
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Delete Transactions
+  .modal-body
+    The transaction you are deleting is one of several. What would you like to delete?
+  .modal-footer
+    = link_to "Cancel", "#", class: "btn delete-none"
+    = link_to "Delete all", "#", class: "btn btn-danger delete-all"
+    = link_to "Delete this and all later transactions", "#", class: "btn btn-warning delete-later"
+    = link_to "Delete just this transaction", "#", class: "btn btn-success delete-one"
+
 #update-balance-modal.modal.fade.hide
   .modal-header
     %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×

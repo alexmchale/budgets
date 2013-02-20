@@ -7,13 +7,13 @@ class Recurrence < ActiveRecord::Base
   validates :starts_at, presence: true
 
   belongs_to :account
-  has_many :transactions
+  has_many :transactions, dependent: :destroy
 
   after_create :create_transactions
 
-  def create_transactions through = 1.year.from_now.to_date
+  def create_transactions through = 18.months.from_now.to_date
     existing_dates = self.transactions.select(:paid_at).to_a.map(&:paid_at)
-    date = self.next_date nil
+    date = self.next_date(existing_dates.max)
 
     while date && date <= through && (!ends_at || date <= ends_at)
       if !existing_dates.include?(date)

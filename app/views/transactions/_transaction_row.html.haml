@@ -34,7 +34,4 @@
         class: "btn clear-transaction-button",
         remote: true
     - if transaction.upcoming? || transaction.cleared?
-      = link_to raw('<i class="icon-remove"></i>'),
-        destroy_transaction_path(transaction),
-        class: "btn remove-transaction-button",
-        remote: true
+      = link_to raw('<i class="icon-remove"></i>'), "#", class: "btn remove-transaction-button"

@@ -114,7 +114,21 @@ class TransactionsController < ApplicationController
   # DELETE /transactions/1.json
   def destroy
     @transaction = Transaction.find(params[:id])
-    @transaction.destroy
+    @recurrence  = @transaction.recurrence
+
+    case params[:delete_mode]
+    when nil, 'delete-one'
+      if @recurrence
+        @transaction.recurrence.create_transactions @transaction.paid_at + 18.months
+      end
+      @transaction.destroy
+    when 'delete-all'
+      @recurrence.destroy
+    when 'delete-later'
+      Transaction.where("recurrence_id = ? AND paid_at >= ?", @transaction.recurrence_id, @transaction.paid_at).destroy_all
+      @recurrence.ends_at = @transaction.paid_at - 1
+      @recurrence.save!
+    end
 
     respond_to do |format|
       format.html { redirect_to transactions_url }

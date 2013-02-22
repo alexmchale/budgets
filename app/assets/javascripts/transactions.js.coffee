@@ -51,6 +51,8 @@ $ ->
     value        = $this.val()
     original     = $field.data("original").toString()
 
+    return unless cancel || submit
+
     confirmTransactionChangeModal.data
       id:    id
       name:  name

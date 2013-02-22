@@ -49,6 +49,8 @@ module TransactionBase
     base.send :validates_numericality_of, :amount
     base.send :validates_inclusion_of, :transaction_type, in: TRANSACTION_TYPES.values
     base.send :validate, :validate_money
+    base.send :composed_of, :amount, :class_name => 'Money', :mapping => %w(amount amount), :converter => Proc.new { |value| value.respond_to?(:to_money) ? value.to_money : Money.empty }
+    base.send :composed_of, :balance, :class_name => 'Money', :mapping => %w(balance amount), :converter => Proc.new { |value| value.respond_to?(:to_money) ? value.to_money : Money.empty }
   end
 
 end

@@ -103,6 +103,8 @@ GEM
     minitest (4.6.1)
     mocha (0.10.5)
       metaclass (~> 0.0.1)
+    money (5.1.0)
+      i18n (~> 0.6.0)
     multi_json (1.6.1)
     net-http-digest_auth (1.2.1)
     net-http-persistent (2.8)
@@ -214,6 +216,7 @@ DEPENDENCIES
   jquery-rails
   mechanize
   minitest
+  money
   ofx-parser
   onload_js-rails
   pg

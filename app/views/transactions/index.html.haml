@@ -17,17 +17,6 @@
   #upcoming-transactions
     = render partial: "transactions_table", locals: { transactions: @upcoming_transactions }
 
-#cleared-transactions-container.collapse
-  %h2 Cleared Transactions
-  #cleared-transactions
-    = render partial: "transactions_table", locals: { transactions: @cleared_transactions }
-
-- if @posted_transactions.present?
-  #posted-transactions-container.in.collapse
-    %h2 Posted Transactions
-    #posted-transactions
-      = render partial: "transactions_table", locals: { transactions: @posted_transactions }
-
 .actions
 
   = link_to raw('<i class="icon-calendar icon-white"></i> Schedule Transaction'),
@@ -39,6 +28,17 @@
       edit_balance_account_path(current_account),
       class: "btn btn-primary",
       data: { toggle: "modal", target: "#update-balance-modal" }
+
+#cleared-transactions-container.collapse
+  %h2 Cleared Transactions
+  #cleared-transactions
+    = render partial: "transactions_table", locals: { transactions: @cleared_transactions }
+
+- if @posted_transactions.present?
+  #posted-transactions-container.in.collapse
+    %h2 Posted Transactions
+    #posted-transactions
+      = render partial: "transactions_table", locals: { transactions: @posted_transactions }
 
 #new-transaction-modal.modal.fade.hide
   .modal-header

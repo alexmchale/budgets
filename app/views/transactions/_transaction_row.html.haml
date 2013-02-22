@@ -8,13 +8,13 @@
     .editable{data: { name: "payee", original: transaction.payee }}= transaction.payee
     .editable{data: { name: "description", original: transaction.description }}= transaction.description
 
-  - value = if transaction.amount < 0 then format_money transaction.amount.to_i.abs else "" end
+  - value = if transaction.amount < 0 then format_money -transaction.amount else "" end
   %td.debit.amount.editable{data: { name: "debit", original: value }}= value
 
-  - value = if transaction.amount >= 0 then format_money transaction.amount.to_i else "" end
+  - value = if transaction.amount >= 0 then format_money transaction.amount else "" end
   %td.credit.amount.editable{data: { name: "credit", original: value }}= value
 
-  - value = if transaction.balance then format_money transaction.balance.to_i else "" end
+  - value = if transaction.balance then format_money transaction.balance else "" end
   %td.balance.amount= value
 
   %td.actions

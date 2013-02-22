@@ -1,0 +1,10 @@
+= simple_form_for(@user, html: { class: "form-horizontal well" }) do |f|
+
+  = f.error_notification
+
+  .form-inputs
+    = f.input :email, as: :string
+    = f.input :password, as: :password
+
+  .form-actions
+    = f.button :submit

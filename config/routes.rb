@@ -19,6 +19,8 @@ RailsSkeleton::Application.routes.draw do
     end
   end
 
+  resources :users
+
   root to: "transactions#index"
 
 end

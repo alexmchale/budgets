@@ -2,6 +2,7 @@ class Account < ActiveRecord::Base
 
   serialize :polling_parameters, JSON
   has_many :transactions
+  belongs_to :user
   composed_of :stated_balance, :class_name => 'Money', :mapping => %w(stated_balance amount), :converter => Proc.new { |value| value.respond_to?(:to_money) ? value.to_money : Money.empty }
   composed_of :posted_balance, :class_name => 'Money', :mapping => %w(posted_balance amount), :converter => Proc.new { |value| value.respond_to?(:to_money) ? value.to_money : Money.empty }
 

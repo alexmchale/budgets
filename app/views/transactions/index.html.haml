@@ -1,12 +1,12 @@
 #transactions-header
   %h1 Budgets
 
-  .actions
-    .btn-group{"data-toggle" => "buttons-checkbox"}
-      %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#upcoming-transactions-container" }} Upcoming
-      %button.btn.btn-primary{:type => "button", :data => { :toggle => "collapse", :target => "#cleared-transactions-container"}} Cleared
-      - if @posted_transactions.present?
-        %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#posted-transactions-container"}} Posted
+  /.actions
+  /  .btn-group{"data-toggle" => "buttons-checkbox"}
+  /    %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#upcoming-transactions-container" }} Upcoming
+  /    %button.btn.btn-primary{:type => "button", :data => { :toggle => "collapse", :target => "#cleared-transactions-container"}} Cleared
+  /    - if @posted_transactions.present?
+  /      %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#posted-transactions-container"}} Posted
 
 #upcoming-transactions-container.in.collapse
   %h2

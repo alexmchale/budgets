@@ -1,5 +1,7 @@
 class AccountsController < ApplicationController
 
+  before_filter :check_logged_in!
+
   def edit_balance
     @account = Account.find(params[:id])
     render partial: "edit_balance_modal", locals: { account: @account }

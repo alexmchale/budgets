@@ -22,4 +22,8 @@ class ApplicationController < ActionController::Base
     @_current_account ||= current_user.account
   end
 
+  def check_logged_in!
+    redirect_to sign_in_path unless current_user
+  end
+
 end

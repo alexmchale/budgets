@@ -2,6 +2,8 @@ class RecurrencesController < ApplicationController
 
   include TransactionableController
 
+  before_filter :check_logged_in!
+
   # GET /recurrences
   # GET /recurrences.json
   def index

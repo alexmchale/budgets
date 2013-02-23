@@ -2,6 +2,8 @@ class TransactionsController < ApplicationController
 
   include TransactionableController
 
+  before_filter :check_logged_in!
+
   # GET /transactions
   # GET /transactions.json
   def index

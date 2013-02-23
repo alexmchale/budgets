@@ -17,7 +17,7 @@ class UserSessionsController < ApplicationController
 
   def destroy
     self.current_user = nil
-    redirect_to new_user_session_path
+    redirect_to sign_in_path
   end
 
 end

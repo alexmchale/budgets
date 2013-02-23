@@ -6,4 +6,14 @@ module ApplicationHelper
     raw %[$("#{dom_selector}").html('#{escaped}');]
   end
 
+  def nav_link(text, path)
+    active = if request.path == path then "active" end
+
+    raw <<-HTML
+      <li class="#{active}">
+        <a href="#{h path}">#{h text}</a>
+      </li>
+    HTML
+  end
+
 end

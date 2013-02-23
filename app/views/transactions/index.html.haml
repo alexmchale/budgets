@@ -1,13 +1,3 @@
-#transactions-header
-  %h1 Budgets
-
-  /.actions
-  /  .btn-group{"data-toggle" => "buttons-checkbox"}
-  /    %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#upcoming-transactions-container" }} Upcoming
-  /    %button.btn.btn-primary{:type => "button", :data => { :toggle => "collapse", :target => "#cleared-transactions-container"}} Cleared
-  /    - if @posted_transactions.present?
-  /      %button.btn.btn-primary.active{:type => "button", :data => { :toggle => "collapse", :target => "#posted-transactions-container"}} Posted
-
 #upcoming-transactions-container.in.collapse
   %h2
     Upcoming Transactions
@@ -16,18 +6,6 @@
       = select_tag "upcoming_transactions_time_window", options_for_select(current_account.options_for_time_window, current_account.upcoming_time_window)
   #upcoming-transactions
     = render partial: "transactions_table", locals: { transactions: @upcoming_transactions }
-
-.actions
-
-  = link_to raw('<i class="icon-calendar icon-white"></i> Schedule Transaction'),
-      new_recurrence_path,
-      class: "btn btn-primary",
-      data: { toggle: "modal", target: "#new-transaction-modal" }
-
-  = link_to raw('<i class="icon-pencil icon-white"></i> Set Current Balance'),
-      edit_balance_account_path(current_account),
-      class: "btn btn-primary",
-      data: { toggle: "modal", target: "#update-balance-modal" }
 
 #cleared-transactions-container.collapse
   %h2 Cleared Transactions

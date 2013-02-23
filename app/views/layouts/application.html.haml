@@ -11,6 +11,31 @@
     = javascript_include_tag :application
 
   %body
-    .container= yield
+
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          %a.brand{href: root_path} Clever Budgets
+
+          - if current_user
+
+            %ul.nav
+              = nav_link "Budget", transactions_path
+
+              %li= link_to "Schedule Transactions",
+                new_recurrence_path,
+                data: { toggle: "modal", target: "#new-transaction-modal" }
+
+              %li= link_to "Set Current Balance",
+                edit_balance_account_path(current_account),
+                data: { toggle: "modal", target: "#update-balance-modal" }
+
+            %ul.nav.pull-right
+              = nav_link current_user.email, edit_user_path(current_user)
+              %li= link_to "Sign Out", sign_out_path
+
+    .container.primary-container
+
+      = yield
 
     = onload_tag

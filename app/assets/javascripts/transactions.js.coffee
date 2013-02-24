@@ -110,3 +110,11 @@ $ ->
     params   = { time_window: value }
     $loading.show()
     $.getScript("/transactions/update_upcoming_time_window?#{$.param params}")
+
+  $(document).on "submit", ".modal form", ->
+    $(this).closest(".modal").find("img.loading").show()
+    return true
+
+  $(document).on "show", ".modal", ->
+    $(this).find("img.loading").hide()
+    return true

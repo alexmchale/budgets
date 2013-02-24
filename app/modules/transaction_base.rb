@@ -29,10 +29,17 @@ module TransactionBase
     def debit  ; format_money(-amount) if amount && amount < 0  ; end
     def credit ; format_money(amount)  if amount && amount >= 0 ; end
 
+    def debit?  ; debit != nil  ; end
+    def credit? ; credit != nil ; end
+
     def validate_money
       if self.amount.blank?
         self.errors.add(:debit, "must have a debit or a credit")
         self.errors.add(:credit, "must have a debit or a credit")
+      elsif self.amount < -1_000_000
+        errors[:debit] << "must be less than 1,000,000"
+      elsif self.amount > 1_000_000
+        errors[:credit] << "must be less than 1,000,000"
       end
     end
 
@@ -45,12 +52,9 @@ module TransactionBase
   def self.included(base)
     base.send :include, InstanceMethods
     base.send :extend, ClassMethods
-    base.send :validates_presence_of, :amount
-    base.send :validates_numericality_of, :amount
-    base.send :validates_inclusion_of, :transaction_type, in: TRANSACTION_TYPES.values
+    base.send :validates, :amount, presence: true, numericality: { greater_than_or_equal: -1_000_000, less_than_or_equal: 1_000_000 }
+    base.send :validates, :transaction_type, inclusion: { in: TRANSACTION_TYPES.values }
     base.send :validate, :validate_money
-    base.send :composed_of, :amount, :class_name => 'Money', :mapping => %w(amount amount), :converter => Proc.new { |value| value.respond_to?(:to_money) ? value.to_money : Money.empty }
-    base.send :composed_of, :balance, :class_name => 'Money', :mapping => %w(balance amount), :converter => Proc.new { |value| value.respond_to?(:to_money) ? value.to_money : Money.empty }
   end
 
 end

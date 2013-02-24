@@ -14,7 +14,7 @@
 
 - if @posted_transactions.present?
   #posted-transactions-container.in.collapse
-    %h2 Posted Transactions
+    %h2 Balance History
     #posted-transactions
       = render partial: "transactions_table", locals: { transactions: @posted_transactions }
 
@@ -57,5 +57,6 @@
     %h3 Set Current Balance
   .modal-body
   .modal-footer
+    = image_tag "ajax-loader.gif", class: "loading hide"
     = link_to "Cancel", "#", class: "btn", data: { dismiss: "modal" }
     = link_to "Update", "#", class: "btn btn-primary", data: { submit: "modal-form" }

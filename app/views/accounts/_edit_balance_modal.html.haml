@@ -1,5 +1,6 @@
 = simple_form_for account, remote: true do |f|
 
-  = f.input :stated_balance, as: :string
+  = f.input :posted_balance_string, as: :string
+  = f.hidden_field :create_transaction_for_balance_change, value: "1"
 
   <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>

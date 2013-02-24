@@ -34,7 +34,8 @@ class Recurrence < ActiveRecord::Base
   end
 
   def next_date previous_date
-    return self.starts_at if previous_date == nil
+    previous_date ||= starts_at - 1 if frequency == "1n15"
+    return starts_at if previous_date == nil
 
     next_date =
       case self.frequency

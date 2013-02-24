@@ -58,6 +58,10 @@ module TransactionableController
       @posted_transactions  = current_account.transactions.pending.paid_desc.to_a
       @posted_transactions += current_account.transactions.posted.paid_desc.to_a
 
+      @posted_transactions.sort! do |t1, t2|
+        t2.paid_at <=> t1.paid_at
+      end
+
       balance = current_account.posted_balance
 
       @posted_transactions.each do |transaction|

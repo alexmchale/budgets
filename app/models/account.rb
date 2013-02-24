@@ -1,10 +1,29 @@
 class Account < ActiveRecord::Base
 
+  include TransactionsHelper
+
   serialize :polling_parameters, JSON
   has_many :transactions
   belongs_to :user
-  composed_of :stated_balance, :class_name => 'Money', :mapping => %w(stated_balance amount), :converter => Proc.new { |value| value.respond_to?(:to_money) ? value.to_money : Money.empty }
-  composed_of :posted_balance, :class_name => 'Money', :mapping => %w(posted_balance amount), :converter => Proc.new { |value| value.respond_to?(:to_money) ? value.to_money : Money.empty }
+  around_save :create_transaction_for_balance_change_hook, if: -> a { a.create_transaction_for_balance_change == "1" && a.posted_balance_changed? }
+
+  attr_accessor :create_transaction_for_balance_change
+
+  def posted_balance_string
+    format_money posted_balance
+  end
+
+  def posted_balance_string=(balance)
+    self.posted_balance =
+      case balance
+      when String
+        (balance.gsub(/[^0-9.\-]/, "").to_f * 100).to_i
+      when Float
+        (balance * 100).to_i
+      else
+        balance.to_i
+      end
+  end
 
   def poll
     return if polling_parameters.blank?
@@ -70,6 +89,21 @@ class Account < ActiveRecord::Base
     when "3months"  then Date.today.next_month.next_month.end_of_month
     when "6months"  then Date.today.next_month.next_month.next_month.next_month.next_month.end_of_month
     when "12months" then Date.today.next_month.next_month.next_month.next_month.next_month.next_month.next_month.next_month.next_month.next_month.next_month.end_of_month
+    end
+  end
+
+  def create_transaction_for_balance_change_hook
+    t =
+      Transaction.new \
+        account:          self,
+        paid_at:          Time.now,
+        amount:           posted_balance_was - posted_balance,
+        payee:            "Balance Adjustment",
+        description:      "",
+        transaction_type: "posted"
+
+    transaction do
+      t.save! if yield
     end
   end
 

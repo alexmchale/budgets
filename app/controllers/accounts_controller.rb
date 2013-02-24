@@ -20,7 +20,7 @@ class AccountsController < ApplicationController
   private
 
   def account_params
-    params.require(:account).permit(:stated_balance)
+    params.require(:account).permit(:posted_balance_string, :create_transaction_for_balance_change)
   end
 
 end

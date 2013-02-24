@@ -14,6 +14,7 @@ class TransactionsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @transactions }
+      format.js { load_dynamic_transactions ; render "render" }
     end
   end
 

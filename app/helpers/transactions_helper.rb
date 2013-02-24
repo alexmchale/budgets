@@ -2,9 +2,7 @@ module TransactionsHelper
 
   include ActionView::Helpers::NumberHelper
 
-  def format_money(money)
-    total_cents = money.cents
-
+  def format_money(total_cents)
     dollars = total_cents.to_i / 100
     cents   = total_cents.to_i % 100
 

@@ -1,15 +1,14 @@
 @import "compass/utilities/general/clearfix"
 
-body
-  font-family: "Open Sans Condensed", sans-serif
-  margin-bottom: 50px
-
 h2
   +clearfix
   .actions
     float: right
     display: inline-block
     padding-right: 5px
+  border-bottom: 1px solid #EEE
+  margin-top: 0px
+  padding-top: 0px
 
 .transaction
   .paid-at
@@ -39,6 +38,8 @@ h2
       background-color: #F9FFF9
   &.month-changed
     border-top: 2px solid #AAA
+  &:hover
+    background-color: #FFFF99 !important
 
 .blinking
   background-color: linen

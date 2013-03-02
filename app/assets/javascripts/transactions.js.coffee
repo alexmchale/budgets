@@ -1,5 +1,7 @@
 $ ->
 
+  ajaxLoadingImage = preloadImage("ajax-loader.gif")
+
   confirmTransactionChangeModal = $("#confirm-transaction-change-modal")
   confirmTransactionDeleteModal = $("#confirm-transaction-delete-modal")
 
@@ -82,6 +84,12 @@ $ ->
     confirmTransactionDeleteModal.data("id", id)
     confirmTransactionDeleteModal.modal("show")
     return false
+
+  $(document).on "click", ".clear-transaction-button", ->
+    $this = $(this)
+    $td   = $this.closest("td")
+    $td.html(ajaxLoadingImage)
+    return true
 
   $(document).on "hidden", ".modal", ->
     $(this).removeData "modal"

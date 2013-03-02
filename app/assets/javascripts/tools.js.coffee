@@ -27,3 +27,9 @@ $.fn.extend
     else
       fn1 = -> $this.whenVisible fn
       setTimeout fn1, 100
+
+window.preloadImage = (name) ->
+
+  image = new Image()
+  image.src = "/assets/" + name
+  return image

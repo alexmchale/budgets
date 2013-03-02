@@ -36,9 +36,9 @@ module TransactionBase
       if self.amount.blank?
         self.errors.add(:debit, "must have a debit or a credit")
         self.errors.add(:credit, "must have a debit or a credit")
-      elsif self.amount < -1_000_000
+      elsif self.amount < -100_000_000
         errors[:debit] << "must be less than 1,000,000"
-      elsif self.amount > 1_000_000
+      elsif self.amount > 100_000_000
         errors[:credit] << "must be less than 1,000,000"
       end
     end
@@ -52,7 +52,7 @@ module TransactionBase
   def self.included(base)
     base.send :include, InstanceMethods
     base.send :extend, ClassMethods
-    base.send :validates, :amount, presence: true, numericality: { greater_than_or_equal: -1_000_000, less_than_or_equal: 1_000_000 }
+    base.send :validates, :amount, presence: true
     base.send :validates, :transaction_type, inclusion: { in: TRANSACTION_TYPES.values }
     base.send :validate, :validate_money
   end

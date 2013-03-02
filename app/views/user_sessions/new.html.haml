@@ -1,17 +1,15 @@
 = form_tag sign_in_path, class: "form-horizontal" do
 
-  .row
-    .offset4.span4
-      %h1 Sign in to Budgets
+  %h1 Sign in to Budgets
 
-      %fieldset
+  %fieldset
 
-        %label{style: "margin-top: 20px"} Email
-        = text_field_tag :email, "", style: "width: 100%"
+    %label{style: "margin-top: 20px"} Email
+    = text_field_tag :email, "", style: "width: 100%"
 
-        %label{style: "margin-top: 10px"} Password
-        = password_field_tag :password, "", style: "width: 100%"
+    %label{style: "margin-top: 10px"} Password
+    = password_field_tag :password, "", style: "width: 100%"
 
-      %hr
+  %hr
 
-      = button_tag "Sign in", class: "btn", type: "submit"
+  = button_tag "Sign in", class: "btn", type: "submit"

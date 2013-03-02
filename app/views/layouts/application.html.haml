@@ -34,8 +34,13 @@
               = nav_link current_user.email, edit_user_path(current_user)
               %li= link_to "Sign Out", sign_out_path
 
-    .container.primary-container
-
-      = yield
+    - if @use_narrow_container
+      .container
+        .row
+          .offset4.span4.primary-container{style: "padding-left: 25px; padding-right: 45px"}
+            = yield
+    - else
+      .container.primary-container
+        = yield
 
     = onload_tag

@@ -1,9 +1,12 @@
 class UserSessionsController < ApplicationController
 
   def new
+    @use_narrow_container = true
   end
 
   def create
+    @use_narrow_container = true
+
     user = User.where("email ILIKE ?", params[:email]).first
 
     if user != nil && user.password == params[:password]

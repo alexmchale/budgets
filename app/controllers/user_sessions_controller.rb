@@ -7,9 +7,13 @@ class UserSessionsController < ApplicationController
   def create
     @use_narrow_container = true
 
-    user = User.where("email ILIKE ?", params[:email]).first
+    user = User.find_by_email(params[:email])
 
     if user != nil && user.password == params[:password]
+      self.current_user = user
+      redirect_to transactions_path
+    elsif user == nil
+      user = User.create(params.slice :email, :password)
       self.current_user = user
       redirect_to transactions_path
     else

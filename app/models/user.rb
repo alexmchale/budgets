@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
     self.password_hash = @password
   end
 
+  def self.find_by_email(email)
+    where("LOWER(email) = ?", email.to_s.downcase.strip).first if email.present?
+  end
+
 end

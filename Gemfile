@@ -15,6 +15,7 @@ gem 'redis-namespace'
 gem 'redis-rails'
 gem 'simple_form'
 gem 'strong_parameters'
+gem 'airbrake'
 
 group :assets do
   gem 'bootstrap-sass-rails'

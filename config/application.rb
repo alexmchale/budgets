@@ -64,6 +64,6 @@ module RailsSkeleton
     config.autoload_paths << Rails.root.join("app", "modules")
 
     # Configure the session store to use Redis.
-    config.session_store :redis_store
+    #config.session_store :redis_store
   end
 end

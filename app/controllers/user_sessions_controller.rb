@@ -13,9 +13,16 @@ class UserSessionsController < ApplicationController
       self.current_user = user
       redirect_to transactions_path
     elsif user == nil
-      user = User.create(params.slice :email, :password)
-      self.current_user = user
-      redirect_to transactions_path
+      user = User.new
+      user.email = params[:email]
+      user.password = params[:password]
+      if user.save
+        self.current_user = user
+        redirect_to transactions_path
+      else
+        flash.now[:error] = "Invalid email or password, please try again."
+        render :new
+      end
     else
       flash.now[:error] = "Invalid email or password, please try again."
       render :new

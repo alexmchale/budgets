@@ -1,6 +1,6 @@
 = form_tag sign_in_path, class: "form-horizontal" do
 
-  %h1 Sign in to Budgets
+  %h1 Sign in (or up!)
 
   %fieldset
 
@@ -9,6 +9,10 @@
 
     %label{style: "margin-top: 10px"} Password
     = password_field_tag :password, "", style: "width: 100%"
+
+  %hr
+
+  If you don't already have an account, this form will create one for you.
 
   %hr
 

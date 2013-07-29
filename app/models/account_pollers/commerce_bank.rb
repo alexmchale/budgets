@@ -49,7 +49,17 @@ module AccountPollers
     end
 
     def read_current_balance
-      @account.posted_balance = node_cents(@activity_page.search("//a[text()='Available Balance:']/../../td[3]"))
+      node = @activity_page.search(%{//*[@id="pageBodyHeader"]/table/tr/td[1]/div[2]/div[2]/table/tr/td[3]/table/tr[2]/td[3]})
+      @account.posted_balance = node_cents(node)
+      #p @activity_page.search("//table.summaryTable/tr[2]")
+      #p @activity_page.search("//table.summaryTable/tr[2]/td[3]")
+      #p node_cents(@activity_page.search("//table.summaryTable/tr[2]/td[3]"))
+      #p @activity_page.search("//a[text()='Available Balance:']")
+      #p @activity_page.search("//a[text()='Available Balance:']/..")
+      #p @activity_page.search("//a[text()='Available Balance:']/../..")
+      #p @activity_page.search("//a[text()='Available Balance:']/../../td[3]")
+
+      #@account.posted_balance = node_cents(@activity_page.search("//a[text()='Available Balance:']/../../td[3]"))
 
       raise CannotFindBalance unless @account.posted_balance
 

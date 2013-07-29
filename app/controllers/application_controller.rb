@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
 
   def current_account
     @_current_account ||= current_user.account
+    @_current_account ||= Account.create!(:user_id => current_user.id)
   end
 
   def check_logged_in!

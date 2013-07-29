@@ -6,3 +6,6 @@ en:
         posted_balance_string: "Balance"
       transaction:
         paid_at: "Date"
+  brand:
+    name: "Budget 30"
+    saying: "Your Personal Budget Planner"

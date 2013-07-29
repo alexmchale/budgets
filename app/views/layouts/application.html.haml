@@ -3,7 +3,7 @@
 
   %head
 
-    %title Rails Skeleton 3.2
+    %title #{t 'brand.name'}: #{t 'brand.saying'}
 
     = stylesheet_link_tag :application, media: "all"
     = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700"
@@ -15,7 +15,7 @@
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
-          %a.brand{href: root_path} Clever Budgets
+          %a.brand{href: root_path}= t 'brand.name'
 
           - if current_user
 
